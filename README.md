@@ -1,4 +1,13 @@
 # PACKLINK
+
+## Dev
+- [x] Client
+- [x] Shipping information
+- [ ] Send shipping
+
+
+## DESCRIPTION
+
 Conector para la API de PACKLINKPRO.
 
 + CLIENT
