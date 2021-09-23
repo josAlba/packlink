@@ -2,156 +2,157 @@
 
 namespace packlink\Model;
 
+use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class ClientModel
 {
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("country")
      */
-    private ?string $country = null;
+    private $country;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("platform")
      */
-    private ?string $platform = null;
+    private $platform;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("email")
      */
-    private ?string $email = null;
+    private $email;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("address")
      */
-    private ?string $address = null;
+    private $address;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("location")
      */
-    private ?string $location = null;
+    private $location;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("phone")
      */
-    private ?string $phone = null;
+    private $phone;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("identifier")
      */
-    private ?string $identifier = null;
+    private $identifier;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("name")
      */
-    private ?string $name = null;
+    private $name;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("surname")
      */
-    private ?string $surname = null;
+    private $surname;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("state")
      */
-    private ?string $state = null;
+    private $state;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("city")
      */
-    private ?string $city = null;
+    private $city;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("language")
      */
-    private ?string $language = null;
+    private $language;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("platform_country")
      */
-    private ?string $platformCountry = null;
+    private $platformCountry;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("customer_type")
      */
-    private ?string $customerType = null;
+    private $customerType;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("company_name")
      */
-    private ?string $companyName = null;
+    private $companyName;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("postal_code")
      */
-    private ?string $postalCode = null;
+    private $postalCode;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("estimated_deliveries_volume")
      */
-    private ?string $estimatedDeliveriesVolume = null;
+    private $estimatedDeliveriesVolume;
 
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @SerializedName("tax_id")
      */
-    private ?string $taxId = null;
+    private $taxId;
 
     /**
      * @var string[]
      * @Type("array")
      * @SerializedName("marketplaces")
      */
-    private array $marketplaces;
+    private $marketplaces;
 
     /**
      * @var string[]
      * @Type("array")
      * @SerializedName("ecommerces")
      */
-    private array $ecommerces;
+    private $ecommerces;
 
     /**
      * @var string[]
      * @Type("array")
      * @SerializedName("userIds")
      */
-    private array $userIds;
+    private $userIds;
 
     public function getTaxId(): ?string
     {

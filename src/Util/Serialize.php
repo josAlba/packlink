@@ -2,15 +2,20 @@
 
 namespace packlink\Util;
 
-use JsonException;
+use Doctrine\Common\Annotations\AnnotationReader;
 use packlink\Model\ClientModel;
 use packlink\Model\PackagingModel;
+use packlink\Model\PostalCodeModel;
 use packlink\Model\RequestShippingModel;
+use packlink\Model\ResponseShippingModel;
 use packlink\Model\ShipmentModel;
 use packlink\Model\TrackModel;
 use packlink\Model\WarehousesModel;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -24,9 +29,12 @@ class Serialize
 
     public function __construct()
     {
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
+
         $encoders = [new JsonEncoder()];
         $normalizers = [
-            new ObjectNormalizer(null, null, null, new ReflectionExtractor()),
+            new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, null, new ReflectionExtractor()),
             new ArrayDenormalizer(),
             new GetSetMethodNormalizer()];
         $this->serializer = new Serializer($normalizers, $encoders);
@@ -35,6 +43,11 @@ class Serialize
     public function serializeRequestShippingModel(RequestShippingModel $requestShippingModel): string
     {
         return $this->serializer->serialize($requestShippingModel, 'json');
+    }
+
+    public function deserializeResponseShippingModel(string $json): ResponseShippingModel
+    {
+        return $this->serializer->deserialize($json, ResponseShippingModel::class, self::JSON);
     }
 
     public function deserializeShipmentModel(string $json): ShipmentModel
@@ -54,11 +67,10 @@ class Serialize
     /**
      * @param string $json
      * @return array
-     * @throws JsonException
      */
     public function deserializeLabels(string $json): array
     {
-        return json_decode($json, false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($json, false);
     }
 
     public function deserializeClientModel(string $json): ClientModel
@@ -82,5 +94,10 @@ class Serialize
     public function deserializeWarehousesModel(string $json): array
     {
         return $this->serializer->deserialize($json, WarehousesModel::class . '[]', self::JSON);
+    }
+
+    public function deserializePostalCode(string $json): PostalCodeModel
+    {
+        return $this->serializer->deserialize($json, PostalCodeModel::class, self::JSON);
     }
 }

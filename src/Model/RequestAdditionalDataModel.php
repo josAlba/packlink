@@ -2,6 +2,7 @@
 
 namespace packlink\Model;
 
+use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class RequestAdditionalDataModel
@@ -9,42 +10,42 @@ class RequestAdditionalDataModel
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("postalZoneIdFrom")
+     * @SerializedName("postal_zone_id_from")
      */
     private string $postalZoneIdFrom;
 
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("postalZoneIdTo")
+     * @SerializedName("postal_zone_id_to")
      */
     private string $postalZoneIdTo;
 
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("postalZoneNameFrom")
+     * @SerializedName("postal_zone_name_from")
      */
     private string $postalZoneNameFrom;
 
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("postalZoneNameTo")
+     * @SerializedName("postal_zone_name_to")
      */
     private string $postalZoneNameTo;
 
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("zipCodeIdFrom")
+     * @SerializedName("zip_code_id_from")
      */
     private string $zipCodeIdFrom;
 
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("zipCodeIdTo")
+     * @SerializedName("zip_code_id_to")
      */
     private string $zipCodeIdTo;
 
@@ -62,9 +63,26 @@ class RequestAdditionalDataModel
      */
     private string $shippingServiceSelected;
 
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("selectedWarehouseId")
+     */
+    private string $selectedWarehouseId;
+
     public function getShippingServiceSelected(): string
     {
         return $this->shippingServiceSelected;
+    }
+
+    public function setSelectedWarehouseId(string $selectedWarehouseId): void
+    {
+        $this->selectedWarehouseId = $selectedWarehouseId;
+    }
+
+    public function getSelectedWarehouseId(): string
+    {
+        return $this->selectedWarehouseId;
     }
 
     public function setShippingServiceSelected(string $shippingServiceSelected): void

@@ -8,14 +8,14 @@ use packlink\Model\PackagingModel;
 use packlink\Model\WarehousesModel;
 use packlink\Util\Serialize;
 
-class Client
+class User extends Packlink
 {
-    private Packlink $packlink;
     private Serialize $serialize;
 
     public function __construct(string $apiKey)
     {
-        $this->packlink = new Packlink($apiKey);
+        parent::__construct($apiKey);
+
         $this->serialize = new Serialize();
     }
 
@@ -25,7 +25,7 @@ class Client
      */
     public function getClient(): ?ClientModel
     {
-        $response = $this->packlink->requestGet(Endpoint::ENDPOINT_CLIENT);
+        $response = $this->requestGet(Endpoint::ENDPOINT_CLIENT);
 
         if ($response === null) {
             return null;
@@ -40,7 +40,7 @@ class Client
      */
     public function getPackages(): ?array
     {
-        $response = $this->packlink->requestGet(Endpoint::ENDPOINT_PACKAGES);
+        $response = $this->requestGet(Endpoint::ENDPOINT_PACKAGES);
 
         if ($response === null) {
             return null;
@@ -55,7 +55,7 @@ class Client
      */
     public function getWarehouses(): ?array
     {
-        $response = $this->packlink->requestGet(Endpoint::ENDPOINT_WAREHOUSES);
+        $response = $this->requestGet(Endpoint::ENDPOINT_WAREHOUSES);
 
         if ($response === null) {
             return null;

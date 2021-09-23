@@ -20,7 +20,9 @@
     "guzzlehttp/guzzle": "^7.3",
     "symfony/serializer": "^5.3",
     "symfony/property-access": "^5.3",
-    "ext-json": "*"
+    "ext-json": "*",
+    "doctrine/annotations": "^1.13",
+    "jms/serializer-bundle": "^3.10"
   }
   ,
   "require-dev": {
