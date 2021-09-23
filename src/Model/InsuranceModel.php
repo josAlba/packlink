@@ -2,6 +2,7 @@
 
 namespace packlink\Model;
 
+use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class InsuranceModel

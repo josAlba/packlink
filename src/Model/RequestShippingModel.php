@@ -2,6 +2,7 @@
 
 namespace packlink\Model;
 
+use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class RequestShippingModel
@@ -137,23 +138,23 @@ class RequestShippingModel
     /**
      * @var AddressModel
      * @Type("packlink\Model\AddressModel")
-     * @SerializedName("additionalData")
+     * @SerializedName("from")
      */
     private AddressModel $from;
 
     /**
      * @var AddressModel
      * @Type("packlink\Model\AddressModel")
-     * @SerializedName("additionalData")
+     * @SerializedName("to")
      */
     private AddressModel $to;
 
     /**
-     * @var PackagesModel
-     * @Type("packlink\Model\PackagesModel")
-     * @SerializedName("additionalData")
+     * @var PackagesModel[]
+     * @Type("array<packlink\Model\PackagesModel>")
+     * @SerializedName("packages")
      */
-    private PackagesModel $packages;
+    private array $packages;
 
     public function __construct()
     {
@@ -321,12 +322,23 @@ class RequestShippingModel
         return $this->contentSecondHand;
     }
 
-    public function setPackages(PackagesModel $packages): void
+    /**
+     * @param PackagesModel[] $packages
+     */
+    public function setPackages(array $packages): void
     {
         $this->packages = $packages;
     }
 
-    public function getPackages(): PackagesModel
+    public function addPackages(PackagesModel $packages): void
+    {
+        $this->packages[] = $packages;
+    }
+
+    /**
+     * @return PackagesModel[]
+     */
+    public function getPackages(): array
     {
         return $this->packages;
     }
