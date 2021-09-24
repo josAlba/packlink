@@ -5,6 +5,7 @@ namespace packlink;
 use GuzzleHttp\Exception\GuzzleException;
 use packlink\Model\ClientModel;
 use packlink\Model\PackagingModel;
+use packlink\Model\UserModel;
 use packlink\Model\WarehousesModel;
 use packlink\Util\Serialize;
 
@@ -35,7 +36,7 @@ class User extends Packlink
     }
 
     /**
-     * @return PackagingModel[]|null
+     * @return PackagingModel[]
      * @throws GuzzleException
      */
     public function getPackages(): ?array
@@ -43,14 +44,14 @@ class User extends Packlink
         $response = $this->requestGet(Endpoint::ENDPOINT_PACKAGES);
 
         if ($response === null) {
-            return null;
+            return [];
         }
 
         return $this->serialize->deserializePackagingModel($response);
     }
 
     /**
-     * @return WarehousesModel[]|null
+     * @return WarehousesModel[]
      * @throws GuzzleException
      */
     public function getWarehouses(): ?array
@@ -58,9 +59,24 @@ class User extends Packlink
         $response = $this->requestGet(Endpoint::ENDPOINT_WAREHOUSES);
 
         if ($response === null) {
-            return null;
+            return [];
         }
 
         return $this->serialize->deserializeWarehousesModel($response);
+    }
+
+    /**
+     * @return UserModel|null
+     * @throws GuzzleException
+     */
+    public function getUser(): ?UserModel
+    {
+        $response = $this->requestGet(Endpoint::ENDPOINT_USERS);
+
+        if ($response === null) {
+            return null;
+        }
+
+        return $this->serialize->deserializeUser($response);
     }
 }
