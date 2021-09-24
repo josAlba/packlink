@@ -40,15 +40,15 @@ class Shipping extends Packlink
 
     /**
      * @param string $reference
-     * @return TrackModel[]|null
+     * @return TrackModel[]
      * @throws GuzzleException
      */
-    public function getShipmentTracks(string $reference): ?array
+    public function getShipmentTracks(string $reference): array
     {
         $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS . '/' . $reference . '/' . Endpoint::ENDPOINT_TRACKS);
 
         if ($response === null) {
-            return null;
+            return [];
         }
 
         return $this->serialize->deserializeShipmentTracks($response);
@@ -56,16 +56,16 @@ class Shipping extends Packlink
 
     /**
      * @param string $reference
-     * @return array|null
+     * @return array
      * @throws GuzzleException
      * @throws \JsonException
      */
-    public function getLabels(string $reference): ?array
+    public function getLabels(string $reference): array
     {
         $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS . '/' . $reference . '/' . Endpoint::ENDPOINT_LABELS);
 
         if ($response === null) {
-            return null;
+            return [];
         }
 
         return $this->serialize->deserializeLabels($response);
@@ -89,6 +89,8 @@ class Shipping extends Packlink
     }
 
     /**
+     * @param RequestShippingModel $shippingModel
+     * @return ResponseShippingModel|null
      * @throws Exception
      */
     public function sendShipping(RequestShippingModel $shippingModel): ?ResponseShippingModel
@@ -110,15 +112,15 @@ class Shipping extends Packlink
     /**
      * @param string $postalCode
      * @param string $isoCode
-     * @return PostalCodeModel|null
+     * @return PostalCodeModel[]
      * @throws GuzzleException
      */
-    public function getPostalCodeModel(string $postalCode, string $isoCode): ?PostalCodeModel
+    public function getPostalCodeModel(string $postalCode, string $isoCode): array
     {
         $response = $this->requestGet(Endpoint::ENDPOINT_LOCATION . '/' . Endpoint::ENDPOINT_POSTALCODE . '/' . $isoCode . '/' . $postalCode);
 
         if ($response === null) {
-            return null;
+            return [];
         }
 
         return $this->serialize->deserializePostalCode($response);

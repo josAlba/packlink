@@ -49,6 +49,23 @@ class PostalCodeModel
      */
     private $postalZoneId;
 
+    /**
+     * @var PostalZoneModel
+     * @Type("packlink\Model\PostalZoneModel")
+     * @SerializedName("postalZone")
+     */
+    private $postalZone;
+
+    public function getPostalZone(): PostalZoneModel
+    {
+        return $this->postalZone;
+    }
+
+    public function setPostalZone(PostalZoneModel $postalZone): void
+    {
+        $this->postalZone = $postalZone;
+    }
+
     public function getId(): string
     {
         return $this->id;
