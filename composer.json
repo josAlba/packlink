@@ -18,10 +18,10 @@
   "require": {
     "php": ">= 8.0",
     "guzzlehttp/guzzle": "^7.3",
-    "symfony/serializer": "^5.3",
-    "symfony/property-access": "^5.3",
+    "symfony/serializer": "5.2.*",
+    "symfony/property-access": "5.2.*",
     "ext-json": "*",
-    "doctrine/annotations": "^1.13",
+    "doctrine/annotations": "^1.0",
     "jms/serializer-bundle": "^3.10"
   }
   ,
