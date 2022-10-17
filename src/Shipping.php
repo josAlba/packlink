@@ -10,6 +10,7 @@ use packlink\Model\ResponseShippingModel;
 use packlink\Model\ShipmentModel;
 use packlink\Model\TrackModel;
 use packlink\Util\Serialize;
+use RuntimeException;
 
 class Shipping extends Packlink
 {
@@ -24,12 +25,13 @@ class Shipping extends Packlink
 
     /**
      * @param string $reference
+     *
      * @return ShipmentModel|null
      * @throws GuzzleException
      */
     public function getShipment(string $reference): ?ShipmentModel
     {
-        $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS . '/' . $reference);
+        $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS.'/'.$reference);
 
         if ($response === null) {
             return null;
@@ -40,12 +42,13 @@ class Shipping extends Packlink
 
     /**
      * @param string $reference
+     *
      * @return TrackModel[]
      * @throws GuzzleException
      */
     public function getShipmentTracks(string $reference): array
     {
-        $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS . '/' . $reference . '/' . Endpoint::ENDPOINT_TRACKS);
+        $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS.'/'.$reference.'/'.Endpoint::ENDPOINT_TRACKS);
 
         if ($response === null) {
             return [];
@@ -56,13 +59,14 @@ class Shipping extends Packlink
 
     /**
      * @param string $reference
+     *
      * @return array
      * @throws GuzzleException
-     * @throws \JsonException
+     * @throws \Exception
      */
     public function getLabels(string $reference): array
     {
-        $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS . '/' . $reference . '/' . Endpoint::ENDPOINT_LABELS);
+        $response = $this->requestGet(Endpoint::ENDPOINT_SHIPMENTS.'/'.$reference.'/'.Endpoint::ENDPOINT_LABELS);
 
         if ($response === null) {
             return [];
@@ -73,15 +77,15 @@ class Shipping extends Packlink
 
     /**
      * @param string $url
+     *
      * @return string|null
-     * @throws \JsonException
      * @throws Exception
      */
     public function setCallbackShipping(string $url): ?string
     {
         $body = json_encode(['url' => $url], JSON_THROW_ON_ERROR);
         $response = $this->requestPost(
-            Endpoint::ENDPOINT_SHIPMENTS . Endpoint::ENDPOINT_CALLBACK,
+            Endpoint::ENDPOINT_SHIPMENTS.Endpoint::ENDPOINT_CALLBACK,
             $body
         );
 
@@ -90,6 +94,7 @@ class Shipping extends Packlink
 
     /**
      * @param RequestShippingModel $shippingModel
+     *
      * @return ResponseShippingModel|null
      * @throws Exception
      */
@@ -98,7 +103,7 @@ class Shipping extends Packlink
         $requestShippingModel = $this->serialize->serializeRequestShippingModel($shippingModel);
 
         if (empty($requestShippingModel)) {
-            throw new Exception('serializer error');
+            throw new RuntimeException('serializer error');
         }
 
         $response = $this->requestPost(
@@ -112,12 +117,15 @@ class Shipping extends Packlink
     /**
      * @param string $postalCode
      * @param string $isoCode
+     *
      * @return PostalCodeModel[]
      * @throws GuzzleException
      */
     public function getPostalCodeModel(string $postalCode, string $isoCode): array
     {
-        $response = $this->requestGet(Endpoint::ENDPOINT_LOCATION . '/' . Endpoint::ENDPOINT_POSTALCODE . '/' . $isoCode . '/' . $postalCode);
+        $response = $this->requestGet(
+            Endpoint::ENDPOINT_LOCATION.'/'.Endpoint::ENDPOINT_POSTAL_CODE.'/'.$isoCode.'/'.$postalCode
+        );
 
         if ($response === null) {
             return [];

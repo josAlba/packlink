@@ -37,12 +37,14 @@ class Serialize
         $normalizers = [
             new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, null, new ReflectionExtractor()),
             new ArrayDenormalizer(),
-            new GetSetMethodNormalizer()];
+            new GetSetMethodNormalizer(),
+        ];
         $this->serializer = new Serializer($normalizers, $encoders);
     }
 
     /**
      * @param RequestShippingModel $requestShippingModel
+     *
      * @return string
      */
     public function serializeRequestShippingModel(RequestShippingModel $requestShippingModel): string
@@ -52,6 +54,7 @@ class Serialize
 
     /**
      * @param string $json
+     *
      * @return ResponseShippingModel
      */
     public function deserializeResponseShippingModel(string $json): ResponseShippingModel
@@ -61,6 +64,7 @@ class Serialize
 
     /**
      * @param string $json
+     *
      * @return ShipmentModel
      */
     public function deserializeShipmentModel(string $json): ShipmentModel
@@ -70,24 +74,28 @@ class Serialize
 
     /**
      * @param string $json
+     *
      * @return TrackModel[]
      */
     public function deserializeShipmentTracks(string $json): array
     {
-        return $this->serializer->deserialize($json, TrackModel::class . '[]', self::JSON);
+        return $this->serializer->deserialize($json, TrackModel::class.'[]', self::JSON);
     }
 
     /**
      * @param string $json
+     *
      * @return array
+     * @throws
      */
     public function deserializeLabels(string $json): array
     {
-        return json_decode($json, false);
+        return json_decode($json, false, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
      * @param string $json
+     *
      * @return ClientModel
      */
     public function deserializeClientModel(string $json): ClientModel
@@ -97,33 +105,37 @@ class Serialize
 
     /**
      * @param string $json
+     *
      * @return PackagingModel[]
      */
     public function deserializePackagingModel(string $json): array
     {
-        return $this->serializer->deserialize($json, PackagingModel::class . '[]', self::JSON);
+        return $this->serializer->deserialize($json, PackagingModel::class.'[]', self::JSON);
     }
 
     /**
      * @param string $json
+     *
      * @return WarehousesModel[]
      */
     public function deserializeWarehousesModel(string $json): array
     {
-        return $this->serializer->deserialize($json, WarehousesModel::class . '[]', self::JSON);
+        return $this->serializer->deserialize($json, WarehousesModel::class.'[]', self::JSON);
     }
 
     /**
      * @param string $json
+     *
      * @return PostalCodeModel[]
      */
     public function deserializePostalCode(string $json): array
     {
-        return $this->serializer->deserialize($json, PostalCodeModel::class . '[]', self::JSON);
+        return $this->serializer->deserialize($json, PostalCodeModel::class.'[]', self::JSON);
     }
 
     /**
      * @param string $json
+     *
      * @return UserModel
      */
     public function deserializeUser(string $json): UserModel

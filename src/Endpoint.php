@@ -17,5 +17,5 @@ class Endpoint
     public const ENDPOINT_LABELS = '/labels';
     public const ENDPOINT_TRACKS = '/track';
     public const ENDPOINT_CALLBACK = '/callback';
-    public const ENDPOINT_POSTALCODE = '/postalcodes';
+    public const ENDPOINT_POSTAL_CODE = '/postalcodes';
 }

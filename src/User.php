@@ -36,7 +36,7 @@ class User extends Packlink
     }
 
     /**
-     * @return PackagingModel[]
+     * @return PackagingModel[]|null
      * @throws GuzzleException
      */
     public function getPackages(): ?array
@@ -51,7 +51,7 @@ class User extends Packlink
     }
 
     /**
-     * @return WarehousesModel[]
+     * @return WarehousesModel[]|null
      * @throws GuzzleException
      */
     public function getWarehouses(): ?array

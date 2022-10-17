@@ -5,35 +5,33 @@ namespace packlink;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use RuntimeException;
 
 class Packlink
 {
-    private string $apiKey;
     private Client $client;
 
-    public function __construct(string $apiKey)
+    public function __construct(private string $apiKey)
     {
-        $this->apiKey = $apiKey;
-        $this->client = new Client();
+        $options = [
+            'base_uri' => Endpoint::ENDPOINT.Endpoint::ENDPOINT_VERSION,
+            'headers' => [
+                'Authorization' => $this->apiKey,
+            ],
+        ];
+
+        $this->client = new Client($options);
     }
 
     /**
      * @param string $endpoint
+     *
      * @return string|null
      * @throws GuzzleException
      */
     public function requestGet(string $endpoint): ?string
     {
-        $options = [
-            'headers' => [
-                'Authorization' => $this->apiKey
-            ]
-        ];
-
-        $request = $this->client->get(
-            Endpoint::ENDPOINT . Endpoint::ENDPOINT_VERSION . $endpoint,
-            $options
-        );
+        $request = $this->client->get($endpoint);
 
         if ($request->getStatusCode() !== 200) {
             return null;
@@ -48,7 +46,7 @@ class Packlink
     public function requestPost(string $endpoint, string $body = ''): ?string
     {
         if (empty($body)) {
-            throw new Exception('body is null');
+            throw new RuntimeException('body is null');
         }
 
         try {
@@ -57,13 +55,13 @@ class Packlink
                     'Authorization' => $this->apiKey,
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Content-Length' => strlen($body)
+                    'Content-Length' => strlen($body),
                 ],
-                'body'=>$body
+                'body' => $body,
             ];
 
             $request = $this->client->post(
-                Endpoint::ENDPOINT . Endpoint::ENDPOINT_VERSION . $endpoint,
+                Endpoint::ENDPOINT.Endpoint::ENDPOINT_VERSION.$endpoint,
                 $options
             );
 
@@ -77,7 +75,7 @@ class Packlink
             if ($exception->getCode() === 400) {
                 return null;
             }
-            throw new Exception($exception->getMessage());
+            throw new RuntimeException($exception->getMessage());
         }
     }
 }
