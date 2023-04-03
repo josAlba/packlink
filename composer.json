@@ -17,7 +17,7 @@
   ],
   "require": {
     "php": ">= 8.0",
-    "guzzlehttp/guzzle": "^7.3",
+    "guzzlehttp/guzzle": "^7.3.0",
     "symfony/serializer": "5.2.*",
     "symfony/property-access": "5.2.*",
     "ext-json": "*",
